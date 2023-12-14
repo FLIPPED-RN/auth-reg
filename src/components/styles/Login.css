@@ -1,0 +1,16 @@
+/* Login.css или в том же файле, где у вас компонент Login */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Это устанавливает высоту контейнера на 100% высоты экрана */
+}
+
+h1, input, button, p {
+  margin: 10px; 
+}
+
+.login-h{
+  font-size: 40px;
+}
