@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './styles/Registration.css';
 
 const Register = ({ onRegister }) => {
   const [name, setName] = useState('');
@@ -20,7 +21,6 @@ const Register = ({ onRegister }) => {
 
       console.log('Success:', response.data);
       setSuccess('Registration successful!');
-      // Вызовите функцию onRegister переданную через props
       onRegister();
     } catch (err) {
       console.error('Error:', err.response);
@@ -30,19 +30,16 @@ const Register = ({ onRegister }) => {
 
   return (
     <div>
-      <h1>Registration</h1>
-      <input type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
-      <br />
-      <input type="text" placeholder="Surname" onChange={(e) => setSurname(e.target.value)} />
-      <br />
-      <input type="text" placeholder="Login" onChange={(e) => setLogin(e.target.value)} />
-      <br />
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-      <br />
-      <button onClick={handleRegister}>Register</button>
-      <br />
+      <div className="container">
+      <h1>Sign Up</h1>
+      <input className="input-main" type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
+      <input className="input-main" type="text" placeholder="Surname" onChange={(e) => setSurname(e.target.value)} />
+      <input className="input-main" type="text" placeholder="Login" onChange={(e) => setLogin(e.target.value)} />
+      <input className="input-main" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+      <button className="login-btn" onClick={handleRegister}>Зарегистрироваться</button>
       {success && <p>{success}</p>}
       {error && <p>Error: {error}</p>}
+      </div>
     </div>
   );
 };

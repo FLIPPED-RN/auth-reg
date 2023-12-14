@@ -11,34 +11,26 @@ const Login = ({ onLogin }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://xn--90abdibneekjf0abcbbqil3bejr0c1r.xn--p1ai:8000/proprietors', {
-        login,
-        password,
-      });
+      const response = await axios.get('http://xn--90abdibneekjf0abcbbqil3bejr0c1r.xn--p1ai:8000/proprietors/by/id?proprietorID', {
+  login,
+  password,
+}, {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
       console.log('Successful login response:', response.data);
 
       onLogin();
       navigate('/');
-    } catch (err) {
-      console.error('Error:', err);
-    
-      if (err.response) {
-        console.error('Response data:', err.response.data);
-        console.error('Status code:', err.response.status);
-        console.error('Status text:', err.response.statusText);
-    
-        // Обработка валидационной ошибки
-        if (Array.isArray(err.response.data.detail)) {
-          console.error('Validation errors:', err.response.data.detail);
-          // Ваш код для обработки валидационных ошибок
-        } else {
-          console.error('Server error:', err.response.data.message);
-        }
-      } else if (err.request) {
-        console.error('Request made, but no response received.');
+    } catch (error) {
+      if (error.response) {
+        console.log('Server responded with an error:', error.response.data);
+        setError('Ошибка входа. Пожалуйста, проверьте правильность логина и пароля.');
       } else {
-        console.error('Error setting up the request:', err.message);
+        console.error('Ошибка отправки запроса:', error.message);
+        setError('Ошибка отправки запроса. Пожалуйста, попробуйте еще раз.');
       }
     }
   };
@@ -46,12 +38,12 @@ const Login = ({ onLogin }) => {
   return (
     <>
       <div className="container">
-        <h1 className="login-h">Login</h1>
-        <input type="text" placeholder="Login" value={login} onChange={(e) => setLogin(e.target.value)} />
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button onClick={handleLogin}>Login</button>
-        {error && <p>Error: {error}</p>}
-        <p>Если вы не зарегистрированны, <Link to="/register">нажмите здесь</Link>.</p>
+        <h1 className="login-h">Sign In</h1>
+        <input className='input-main' type="text" placeholder="Введите логин" value={login} onChange={(e) => setLogin(e.target.value)} />
+        <input className="input-main" type="password" placeholder="Введите пароль" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <button className="login-btn" onClick={handleLogin}>Войти</button>
+        {error && <p className="error-message">{error}</p>}
+        <p>Если вы не зарегистрированы, <Link to="/register">нажмите здесь</Link>.</p>
       </div>
     </>
   );
